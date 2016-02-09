@@ -1,29 +1,8 @@
 #!/usr/bin/env python3
 # -*- mode: python; coding: utf-8-unix -*-
 
-from Crypto.Cipher import AES
-
-import MiyaguchiPreneel
-
+import AES_MP128
 import binascii
-
-def enc_aes(k,v):
-    mode = AES.MODE_ECB
-    enc  = AES.new(k, mode)
-    result = enc.encrypt(v)
-    return result
-
-def pad_zero(v,l):
-    tmp = v + bytes(0 for i in range(l))
-    return tmp[0:l-1]
-
-def ident(k):
-    return k
-
-hlen = 128
-IV = bytes(0 for i in range(hlen//8))
-
-aes_mp = MiyaguchiPreneel.compressor(enc_aes, ident, pad_zero, hlen)
 
 chunks = [ '49d1f7d9244e04d8b0c127fb1bcbe6eb',
            '492c29292b031f4571a870207c47056e',
@@ -47,9 +26,8 @@ for ch in chunks:
     in_data += ch
 
 in_binary = binascii.unhexlify(in_data)
-hval = aes_mp.comp(IV, in_binary)
+hval = AES_MP128.comp(in_binary)
 
 print(binascii.hexlify(hval))
 
-
-
+# EOF
