@@ -25,7 +25,7 @@ class compressor:
         out_cur = IV
         e = self.encfunc
         g = self.keyfunc
-        for i in range(0, nblk-1):
+        for i in range(0, nblk):
             out_pre = out_cur
             dblk = in_data[i*blksize : (i+1)*blksize]
             if len(dblk) < blksize :
