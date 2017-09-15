@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- mode: python; coding: utf-8-unix -*-
 
+from builtins import bytes
+
 def _bxor(a,b):
-    return bytes(x ^ y for x, y in zip(a, b))
+    return bytes([x ^ y for x, y in zip(a, b)])
 
 def _comp_step(e, g, h_pre, x_cur):
     h_key = g(h_pre)
     h_enc = e(h_key, x_cur)
-    h_cur = _bxor(_bxor(h_enc, x_cur), h_pre)
+    h_cur = _bxor(_bxor(bytes(h_enc), bytes(x_cur)), h_pre)
     return h_cur
 
 class compressor:
