@@ -14,7 +14,7 @@ def _enc_aes(k,v):
 
 def _pad_zero(v,l):
     tmp = v + bytes([0 for i in range(l)])
-    return tmp[0:l-1]
+    return tmp[0:l]
 
 def _ident(k):
     return k
